@@ -21,13 +21,21 @@ interface Song {
 
 const fetchLyricsDebounced = _.debounce(async (title: string, artist: string, setGeniusData: (data: GeniusResult | null) => void) => {
   try {
-    const res = await fetch(`/api/lyrics?title=${encodeURIComponent(title)}&artist=${encodeURIComponent(artist)}`);
+    const cleanTitle = title.split('(')[0].split('-')[0].trim();
+    const cleanArtist = artist.split(',')[0].trim();
+    
+    const res = await fetch(`/api/lyrics?title=${encodeURIComponent(cleanTitle)}&artist=${encodeURIComponent(cleanArtist)}`);
     if (res.ok) {
       const data = await res.json();
-      setGeniusData(data);
+      if (data && data.url) {
+        setGeniusData(data);
+      } else {
+        setGeniusData(null);
+      }
     }
   } catch (error) {
     console.error('Error fetching lyrics:', error);
+    setGeniusData(null);
   }
 }, 1000);
 
