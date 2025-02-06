@@ -14,36 +14,29 @@ interface Song {
  title: string;
  artist: string;
  albumImage: string;
- progress: number;
  duration: number;
 }
 
 export function NowPlaying() {
- const [song, setSong] = useState<Song | null>(null);
- const [showLyrics, setShowLyrics] = useState(false);
- const [geniusData, setGeniusData] = useState<GeniusResult | null>(null);
+  const [song, setSong] = useState<Song | null>(null);
+  const [progress, setProgress] = useState<number>(0);
+  const [showLyrics, setShowLyrics] = useState(false);
+  const [geniusData, setGeniusData] = useState<GeniusResult | null>(null);
 
- useEffect(() => {
-   const fetchSong = async () => {
-     const res = await fetch('/api/now-playing');
-     if (res.ok) {
-       const data = await res.json();
-       setSong(data);
-     }
-   };
+  useEffect(() => {
+    const fetchSong = async () => {
+      const res = await fetch('/api/now-playing');
+      if (res.ok) {
+        const data = await res.json();
+        setSong(data);
+        setProgress(data.progress);
+      }
+    };
 
-   fetchSong();
-   const interval = setInterval(fetchSong, 1000);
-   return () => clearInterval(interval);
- }, []);
-
- useEffect(() => {
-   if (song?.isPlaying) {
-     fetch(`/api/lyrics?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`)
-       .then(res => res.json())
-       .then(data => setGeniusData(data));
-   }
- }, [song?.title, song?.artist]);
+    fetchSong();
+    const interval = setInterval(fetchSong, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
  useEffect(() => {
    const handleClickAway = (e: MouseEvent) => {
@@ -70,8 +63,6 @@ export function NowPlaying() {
      </div>
    );
  }
-
- const progress = (song.progress / song.duration) * 100;
 
  return (
    <div className="relative">
@@ -118,11 +109,11 @@ export function NowPlaying() {
            </motion.p>
          </AnimatePresence>
          <div className="w-full h-1.5 bg-zinc-800/50 rounded-full mt-2 overflow-hidden">
-          <motion.div 
+         <motion.div 
             className="h-full rounded-full relative"
             initial={{ width: 0 }}
             animate={{ 
-              width: `${progress}%`,
+              width: `${(progress / song.duration) * 100}%`,
               background: song.isPlaying ? 
                 "linear-gradient(90deg, rgb(34 197 94), rgb(74 222 128), rgb(34 197 94))" : 
                 "rgb(34 197 94)"

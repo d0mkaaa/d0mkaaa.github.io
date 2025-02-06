@@ -17,7 +17,7 @@ interface Repository {
   private: boolean;
 }
 
-const ProjectCard = ({ repo, index }: { repo: Repository; index: number }) => (
+const ProjectCard = ({ repo }: { repo: Repository }) => (
   <motion.a
     href={repo.html_url}
     target="_blank"
@@ -113,10 +113,10 @@ export default function Home() {
               className="flex gap-6 w-max px-4"
             >
               {repos.map((repo, i) => (
-                <ProjectCard key={`first-${repo.name}`} repo={repo} index={i} />
+                <ProjectCard key={`first-${repo.name}`} repo={repo} />
               ))}
               {repos.map((repo, i) => (
-                <ProjectCard key={`second-${repo.name}`} repo={repo} index={i} />
+                <ProjectCard key={`second-${repo.name}`} repo={repo} />
               ))}
             </motion.div>
           </div>

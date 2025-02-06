@@ -20,6 +20,10 @@ async function getAccessToken() {
   return response.json();
 }
 
+export interface Artist {
+  name: string;
+}
+
 export async function GET() {
   try {
     const { access_token } = await getAccessToken();
@@ -40,7 +44,7 @@ export async function GET() {
     return NextResponse.json({
         isPlaying: data.is_playing,
         title: data.item.name,
-        artist: data.item.artists.map((artist: any) => artist.name).join(', '),
+        artist: data.item.artists.map((artist: Artist) => artist.name).join(', '),
         albumImage: data.item.album.images[0].url,
         progress: data.progress_ms,
         duration: data.item.duration_ms,
