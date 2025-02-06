@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCallback } from 'react';
 import _ from 'lodash';
 
 interface GeniusResult {
