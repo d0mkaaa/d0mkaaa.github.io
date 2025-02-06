@@ -39,14 +39,13 @@ const ProjectCard = ({ repo }: { repo: Repository }) => (
           {topic}
         </span>
       ))}
-    </div>
+    </div> 
   </motion.a>
 );
 
 export default function Home() {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [speed, setSpeed] = useState(15);
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchRepos = async () => {
