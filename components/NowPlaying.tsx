@@ -10,11 +10,12 @@ interface GeniusResult {
 }
 
 interface Song {
- isPlaying: boolean;
- title: string;
- artist: string;
- albumImage: string;
- duration: number;
+  isPlaying: boolean;
+  title: string;
+  artist: string;
+  albumImage: string;
+  duration: number;
+  progress: number;
 }
 
 export function NowPlaying() {

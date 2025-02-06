@@ -112,12 +112,12 @@ export default function Home() {
               }}
               className="flex gap-6 w-max px-4"
             >
-              {repos.map((repo, i) => (
-                <ProjectCard key={`first-${repo.name}`} repo={repo} />
-              ))}
-              {repos.map((repo, i) => (
-                <ProjectCard key={`second-${repo.name}`} repo={repo} />
-              ))}
+            {repos.map((repo) => (
+              <ProjectCard key={`first-${repo.name}`} repo={repo} />
+            ))}
+            {repos.map((repo) => (
+              <ProjectCard key={`second-${repo.name}`} repo={repo} />
+            ))}
             </motion.div>
           </div>
         </section>
